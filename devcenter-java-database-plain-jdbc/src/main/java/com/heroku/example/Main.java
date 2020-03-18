@@ -37,7 +37,7 @@ public class Main {
         try {
             connection = getConnection();
             Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM users");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM internetusers");
             while (rs.next()) {
                 System.out.println(rs.getString("login"));
             }
