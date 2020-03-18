@@ -14,16 +14,14 @@ public class Main {
             String str="";
             Scanner in1 = new Scanner(new File("pgsql.sql"));
             while(in1.hasNext())
-                str += in1.nextLine() + "\r\n";//считываем скрипт в переменную
+                str += in1.nextLine() + "\r\n";
             in1.close();
             Connection connection =  getConnection();
             PreparedStatement pr= connection.prepareStatement(str);
             pr.executeQuery();
-            Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM users");
-            while (rs.next()) {
-                System.out.println(rs.getString("login"));
-            }
+            pr.close();
+            connection.close();
+            allUsers();
         } catch (URISyntaxException e) {
             e.printStackTrace();
         } catch (SQLException e) {
@@ -33,7 +31,24 @@ public class Main {
         }
 
     }
-    
+
+    private static void allUsers() {
+        Connection connection;
+        try {
+            connection = getConnection();
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM users");
+            while (rs.next()) {
+                System.out.println(rs.getString("login"));
+            }
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     private static Connection getConnection() throws URISyntaxException, SQLException {
         URI dbUri = new URI(System.getenv("DATABASE_URL"));
 
