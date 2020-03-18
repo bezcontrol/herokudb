@@ -1,17 +1,18 @@
-DROP SCHEMA IF EXISTS internet_provider CASCADE;
-CREATE SCHEMA internet_provider;
-DROP TABLE IF EXISTS internet_provider.contracts CASCADE;
-DROP TABLE IF EXISTS internet_provider.internet CASCADE;
-DROP TABLE IF EXISTS internet_provider.mobile CASCADE;
-DROP TABLE IF EXISTS internet_provider.pc CASCADE;
-DROP TABLE IF EXISTS internet_provider.roles CASCADE;
-DROP TABLE IF EXISTS internet_provider.services CASCADE;
-DROP TABLE IF EXISTS internet_provider.statuses CASCADE;
-DROP TABLE IF EXISTS internet_provider.tariffs CASCADE;
-DROP TABLE IF EXISTS internet_provider.tv CASCADE;
-DROP TABLE IF EXISTS internet_provider.users CASCADE;
+DROP SCHEMA IF EXISTS public CASCADE;
+CREATE SCHEMA public;
 
-CREATE TABLE internet_provider.roles (
+DROP TABLE IF EXISTS contracts CASCADE;
+DROP TABLE IF EXISTS internet CASCADE;
+DROP TABLE IF EXISTS mobile CASCADE;
+DROP TABLE IF EXISTS pc CASCADE;
+DROP TABLE IF EXISTS roles CASCADE;
+DROP TABLE IF EXISTS services CASCADE;
+DROP TABLE IF EXISTS statuses CASCADE;
+DROP TABLE IF EXISTS tariffs CASCADE;
+DROP TABLE IF EXISTS tv CASCADE;
+DROP TABLE IF EXISTS users CASCADE;
+
+CREATE TABLE roles (
                          id  SERIAL NOT NULL,
                          name VARCHAR(45) NOT NULL,
                          PRIMARY KEY (id),
@@ -19,20 +20,20 @@ CREATE TABLE internet_provider.roles (
                          UNIQUE (name));
 
 
-CREATE TABLE internet_provider.statuses (
+CREATE TABLE statuses (
                             id  SERIAL NOT NULL,
                             name VARCHAR(45) NOT NULL,
                             PRIMARY KEY (id),
                             UNIQUE (id),
                             UNIQUE (name));
 
-CREATE TABLE internet_provider.internet (
+CREATE TABLE internet (
                             id  SERIAL NOT NULL,
                             speed INT NOT NULL,
                             technology VARCHAR(45) NOT NULL,
                             PRIMARY KEY (id));
 
-CREATE TABLE internet_provider.users (
+CREATE TABLE users (
                          id  SERIAL NOT NULL,
                          login VARCHAR(45) NOT NULL,
                          password VARCHAR(45) NOT NULL,
@@ -55,20 +56,20 @@ CREATE TABLE internet_provider.users (
                                  ON DELETE CASCADE
                                  ON UPDATE CASCADE);
 
-CREATE TABLE internet_provider.pc (
+CREATE TABLE pc (
                       id  SERIAL NOT NULL,
                       numOfConnectedPC INT NOT NULL,
                       PRIMARY KEY (id));
 
 
-CREATE TABLE internet_provider.tv (
+CREATE TABLE tv (
                       id  SERIAL NOT NULL,
                       type VARCHAR(45) NOT NULL,
                       numOfChannels INT NOT NULL,
                       PRIMARY KEY (id)
 );
 
-CREATE TABLE internet_provider.mobile (
+CREATE TABLE mobile (
                           id  SERIAL NOT NULL,
                           numOfMinutesInside INT NOT NULL,
                           numOfMinutesOutside INT NOT NULL,
@@ -76,7 +77,7 @@ CREATE TABLE internet_provider.mobile (
                           numOfMbts INT NOT NULL,
                           PRIMARY KEY (id));
 
-CREATE TABLE internet_provider.services (
+CREATE TABLE services (
                            id  SERIAL NOT NULL,
                             idPC INT,
                             idTV INT,
@@ -106,7 +107,7 @@ CREATE TABLE internet_provider.services (
                                     ON UPDATE CASCADE
 );
 
-CREATE TABLE internet_provider.tariffs (
+CREATE TABLE tariffs (
                            id  SERIAL NOT NULL,
                            name VARCHAR(45) NOT NULL,
                            price INT NOT NULL,
@@ -120,7 +121,7 @@ CREATE TABLE internet_provider.tariffs (
                                    ON DELETE CASCADE
                                    ON UPDATE CASCADE);
 
-CREATE TABLE internet_provider.contracts (
+CREATE TABLE contracts (
                              id  SERIAL NOT NULL,
                              idUser INT NOT NULL,
                              idTariff INT NOT NULL,
@@ -141,38 +142,38 @@ CREATE TABLE internet_provider.contracts (
 
 
 
-INSERT INTO internet_provider.roles (name) VALUES ('admin');
-INSERT INTO internet_provider.roles (name) VALUES ('client');
-INSERT INTO internet_provider.statuses (name) VALUES ('waiting');
-INSERT INTO internet_provider.statuses (name) VALUES ('registered');
-INSERT INTO internet_provider.statuses (name) VALUES ('blocked');
-INSERT INTO internet_provider.statuses (name) VALUES ('missed');
-INSERT INTO internet_provider.users (login, password,email, idRole, idStatus, bill) VALUES ('admin','adminpass','user@gmail.com', '1','2','100.0');
-INSERT INTO internet_provider.users (login, password,email, idRole, idStatus, bill)  VALUES ('client','clientpass','user2@gmail.com', '2','2','200.0');
-INSERT INTO internet_provider.internet (speed, technology) VALUES ( '640', '4G');
-INSERT INTO internet_provider.internet (speed, technology)  VALUES ('800', '5G');
-INSERT INTO internet_provider.internet (speed, technology)  VALUES ('1000', '4G');
-INSERT INTO internet_provider.pc (numOfConnectedPC) VALUES ('1');
-INSERT INTO internet_provider.pc (numOfConnectedPC) VALUES ('10');
-INSERT INTO internet_provider.tv (type,numOfChannels) VALUES ('Analog','100');
-INSERT INTO internet_provider.tv (type,numOfChannels) VALUES ('IP-TV','150');
-INSERT INTO internet_provider.tv (type,numOfChannels) VALUES ('Smart-TV','200');
-INSERT INTO internet_provider.mobile (numOfMinutesInside,numOfMinutesOutside,numOfSMS,numOfMbts) VALUES ('100','20','50','7000');
-INSERT INTO internet_provider.mobile (numOfMinutesInside,numOfMinutesOutside,numOfSMS,numOfMbts) VALUES  ('50','100','25','8000');
-INSERT INTO internet_provider.mobile (numOfMinutesInside,numOfMinutesOutside,numOfSMS,numOfMbts) VALUES ('300','100','50','0');
-INSERT INTO internet_provider.services (idTV,idInternet) VALUES ('1', '1');
-INSERT INTO internet_provider.services (idTV) VALUES ('2');
-INSERT INTO internet_provider.services (idPC,idInternet) VALUES ('1', '2');
-INSERT INTO internet_provider.services (idMobile,idInternet) VALUES ('2','1');
-INSERT INTO internet_provider.services (idPC,idInternet) VALUES ('2','2');
-INSERT INTO internet_provider.services (idMobile) VALUES ('3');
-INSERT INTO internet_provider.services (idTV,idInternet) VALUES ('3','2');
-INSERT INTO internet_provider.services (idMobile,idInternet) VALUES ('2','2');
-INSERT INTO internet_provider.tariffs (name, price, idService,durationInDays) VALUES ('Analog TV', '100', '1','30');
-INSERT INTO internet_provider.tariffs (name, price, idService,durationInDays) VALUES ('IP-TV', '150', '2','30');
-INSERT INTO internet_provider.tariffs (name, price, idService,durationInDays) VALUES('Usual pc', '125', '5','30');
-INSERT INTO internet_provider.tariffs (name, price, idService,durationInDays) VALUES('Usual mobile', '150', '4','30');
-INSERT INTO internet_provider.tariffs (name, price, idService,durationInDays) VALUES ('Pro pc', '175', '3','28');
-INSERT INTO internet_provider.tariffs (name, price, idService,durationInDays) VALUES ('Mobile for speak', '125', '6','28');
-INSERT INTO internet_provider.tariffs (name, price, idService,durationInDays) VALUES ('Pro mobile', '125', '8','28');
-INSERT INTO internet_provider.tariffs (name, price, idService,durationInDays) VALUES ('Smart-TV', '250', '7','28');
+INSERT INTO roles (name) VALUES ('admin');
+INSERT INTO roles (name) VALUES ('client');
+INSERT INTO statuses (name) VALUES ('waiting');
+INSERT INTO statuses (name) VALUES ('registered');
+INSERT INTO statuses (name) VALUES ('blocked');
+INSERT INTO statuses (name) VALUES ('missed');
+INSERT INTO users (login, password,email, idRole, idStatus, bill) VALUES ('admin','adminpass','user@gmail.com', '1','2','100.0');
+INSERT INTO users (login, password,email, idRole, idStatus, bill)  VALUES ('client','clientpass','user2@gmail.com', '2','2','200.0');
+INSERT INTO internet (speed, technology) VALUES ( '640', '4G');
+INSERT INTO internet (speed, technology)  VALUES ('800', '5G');
+INSERT INTO internet (speed, technology)  VALUES ('1000', '4G');
+INSERT INTO pc (numOfConnectedPC) VALUES ('1');
+INSERT INTO pc (numOfConnectedPC) VALUES ('10');
+INSERT INTO tv (type,numOfChannels) VALUES ('Analog','100');
+INSERT INTO tv (type,numOfChannels) VALUES ('IP-TV','150');
+INSERT INTO tv (type,numOfChannels) VALUES ('Smart-TV','200');
+INSERT INTO mobile (numOfMinutesInside,numOfMinutesOutside,numOfSMS,numOfMbts) VALUES ('100','20','50','7000');
+INSERT INTO mobile (numOfMinutesInside,numOfMinutesOutside,numOfSMS,numOfMbts) VALUES  ('50','100','25','8000');
+INSERT INTO mobile (numOfMinutesInside,numOfMinutesOutside,numOfSMS,numOfMbts) VALUES ('300','100','50','0');
+INSERT INTO services (idTV,idInternet) VALUES ('1', '1');
+INSERT INTO services (idTV) VALUES ('2');
+INSERT INTO services (idPC,idInternet) VALUES ('1', '2');
+INSERT INTO services (idMobile,idInternet) VALUES ('2','1');
+INSERT INTO services (idPC,idInternet) VALUES ('2','2');
+INSERT INTO services (idMobile) VALUES ('3');
+INSERT INTO services (idTV,idInternet) VALUES ('3','2');
+INSERT INTO services (idMobile,idInternet) VALUES ('2','2');
+INSERT INTO tariffs (name, price, idService,durationInDays) VALUES ('Analog TV', '100', '1','30');
+INSERT INTO tariffs (name, price, idService,durationInDays) VALUES ('IP-TV', '150', '2','30');
+INSERT INTO tariffs (name, price, idService,durationInDays) VALUES('Usual pc', '125', '5','30');
+INSERT INTO tariffs (name, price, idService,durationInDays) VALUES('Usual mobile', '150', '4','30');
+INSERT INTO tariffs (name, price, idService,durationInDays) VALUES ('Pro pc', '175', '3','28');
+INSERT INTO tariffs (name, price, idService,durationInDays) VALUES ('Mobile for speak', '125', '6','28');
+INSERT INTO tariffs (name, price, idService,durationInDays) VALUES ('Pro mobile', '125', '8','28');
+INSERT INTO tariffs (name, price, idService,durationInDays) VALUES ('Smart-TV', '250', '7','28');
