@@ -1,6 +1,5 @@
 DROP SCHEMA IF EXISTS internet_provider CASCADE;
 CREATE SCHEMA internet_provider;
-
 DROP TABLE IF EXISTS internet_provider.contracts CASCADE;
 DROP TABLE IF EXISTS internet_provider.internet CASCADE;
 DROP TABLE IF EXISTS internet_provider.mobile CASCADE;
@@ -168,7 +167,7 @@ INSERT INTO internet_provider.services (idMobile,idInternet) VALUES ('2','1');
 INSERT INTO internet_provider.services (idPC,idInternet) VALUES ('2','2');
 INSERT INTO internet_provider.services (idMobile) VALUES ('3');
 INSERT INTO internet_provider.services (idTV,idInternet) VALUES ('3','2');
-INSERT INTO services (idMobile,idInternet) VALUES ('2','2');
+INSERT INTO internet_provider.services (idMobile,idInternet) VALUES ('2','2');
 INSERT INTO internet_provider.tariffs (name, price, idService,durationInDays) VALUES ('Analog TV', '100', '1','30');
 INSERT INTO internet_provider.tariffs (name, price, idService,durationInDays) VALUES ('IP-TV', '150', '2','30');
 INSERT INTO internet_provider.tariffs (name, price, idService,durationInDays) VALUES('Usual pc', '125', '5','30');
