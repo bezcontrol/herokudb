@@ -19,8 +19,8 @@ public class Main {
             Connection connection =  getConnection();
             PreparedStatement pr= connection.prepareStatement(str);
             pr.executeQuery();
-            PreparedStatement prst= connection.prepareStatement(str);
-            ResultSet rs = prst.executeQuery("SELECT * FROM users");
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM users");
             while (rs.next()) {
                 System.out.println(rs.getString("login"));
             }
