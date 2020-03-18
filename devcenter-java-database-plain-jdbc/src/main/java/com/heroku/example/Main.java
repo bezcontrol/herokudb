@@ -37,9 +37,9 @@ public class Main {
         try {
             connection = getConnection();
             Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM internet_provider.roles;");
+            ResultSet rs = stmt.executeQuery("SELECT login FROM internet_provider.users;");
             while (rs.next()) {
-                System.out.println(rs.getString("login"));
+                System.out.println(rs.getString(1));
             }
         } catch (URISyntaxException e) {
             e.printStackTrace();
